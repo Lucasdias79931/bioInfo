@@ -25,7 +25,7 @@ try:
 
 
     for i in range(0, 34):
-        arquivo_sequencias = os.path.join(here, f"/home/asmita/workspace/BIO/spike_ordenadoPorData/sequencias_spike{i}.fasta")
+        arquivo_sequencias = os.path.join(here, f"/mnt/c/Users/lucas/Downloads/workspace-20250309T192120Z-001/workspace/BIO/Sequences_filtered_by_gaps_and_length/sequencias_spike{i}.fasta")
        
         # Verifica se o arquivo de sequência existe
         if os.path.exists(arquivo_sequencias):

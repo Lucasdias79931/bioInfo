@@ -58,7 +58,7 @@ def writeSeq(outputFile: str, multiple_genomes: list)->None:
 
 def errorInputs():
     print("Argumentos ausentes ou passados errado!")
-    print("1: Arquivo de entrada (obrigatório)")
+    print("1: diretório de entrada (obrigatório)")
     print("2: Diretório de saída (padrão: diretório atual/Sequences_filtered_by_gaps_and_length/)")
     print("3: Número máximo de códons (padrão: None)")
     print("4: Número máximo de GAPs (padrão: None)")
@@ -68,7 +68,7 @@ def errorInputs():
 here = os.path.abspath(os.path.dirname(__file__))
 
 # Valores padrão
-inputFilePath = None
+rootDirectory = None
 outputFilePath = os.path.join(here, "Sequences_filtered_by_gaps_and_length")
 max_codon_in_sequence = None
 max_gap_in_sequence = None
@@ -77,10 +77,10 @@ max_gap_in_sequence = None
 if len(sys.argv) < 2:
     errorInputs()
 
-inputFilePath = sys.argv[1]
+rootDirectory = sys.argv[1]
 
-if not os.path.exists(inputFilePath):
-    print("Arquivo de entrada inexistente!")
+if not os.path.isdir(rootDirectory):
+    print("Diretório de entrada inexistente!")
     errorInputs()
 
 if len(sys.argv) > 2:
