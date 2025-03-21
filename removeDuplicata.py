@@ -1,6 +1,7 @@
 import os
 import sys
 import hashlib
+import time
 
 def transforInHash(sequence: str) -> str:
     
@@ -8,13 +9,43 @@ def transforInHash(sequence: str) -> str:
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-inputFile = "/home/asmita/workspace/bio/SPIKE/spike/sequencias_spike.fasta"
-outputFile = os.path.join(here, "spikeParticionado/sequencias_spike.fasta")
+inputFile = None
+outputFile = None
 
+
+if len(sys.argv) < 2:
+    print("Argumentos ausentes!")
+    print("1: arquivo de entrada (obrigatório)")
+    print("2 - arquivo de saída (padrão: sequencias_sem_duplicatas/sequencias.fasta)")
+
+elif len(sys.argv) < 3:
+    inputFile = sys.argv[1]
+
+    outputFilePath = os.path.join(here, "sequencias_sem_duplicatas")
+    os.makedirs(outputFilePath, exist_ok = True)
+    outputFile = os.path.join(outputFilePath, "sequencias.fasta")
+
+elif len(sys.argv) < 4:
+    inputFile = sys.argv[1]
+    outputFile = sys.argv[2]
+else:
+    print("Argumentos incorrentos!")
+    print("1: arquivo de entrada (obrigatório)")
+    print("2 - arquivo de saída (padrão: sequencias_sem_duplicatas/sequencias.fasta)")
+
+    print("Argumentos passados")
+    for i in range(1, len(sys.argv)):
+        print(sys.argv[i])
+    
+    exit(1)
+
+startTime = time.time()
+
+print("Iniciando processo...")
 
 total_sequenciasProcessadas = 0
 total_sequenciasFinal = 0
-
+total_duplicata = 0
 try:
     with open(inputFile, "r") as file, open(outputFile, "w") as outFile:
         sequences = dict()  
@@ -37,12 +68,15 @@ try:
                     total_sequenciasFinal += 1
                     sequences[hash_sequence] = 1
                     outFile.write(f"{sequence[0]}\n{sequence[1]}\n")
+                else:
+                    total_duplicata += 1
                 sequence = []
         
         print(
-            f"Sequências processadas e duplicatas eliminadas!\nTotal de sequências processadas:{total_sequenciasProcessadas}\nNúmero de Sequências Final:{total_sequenciasFinal}")
+            f"Sequências processadas e duplicatas eliminadas!\nTotal de sequências processadas:{total_sequenciasProcessadas}\nNúmero de duplicatas:{total_duplicata}\nNúmero de Sequências Final:{total_sequenciasFinal}")
         print(f"Resultado guardado em:{outputFile}")
-
+        endTime = time.time() - startTime
+        print(f"tempo de execução:{endTime:.4}s")
 except FileNotFoundError:
     print(f"Erro: O arquivo '{inputFile}' não foi encontrado.")
     sys.exit(1)
