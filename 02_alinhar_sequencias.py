@@ -22,10 +22,10 @@ try:
     
     arquivo_referencia = sys.argv[1]
     here = os.path.abspath(os.path.dirname(__file__))
-
+    os.makedirs('SPIKE_Alinhado',exist_ok=True)
 
     for i in range(0, 34):
-        arquivo_sequencias = os.path.join(here, f"/mnt/c/Users/lucas/Downloads/workspace-20250309T192120Z-001/workspace/BIO/Sequences_filtered_by_gaps_and_length/sequencias_spike{i}.fasta")
+        arquivo_sequencias = os.path.join(here, f"/home/asmita/workspace/bioInfo/sequences_filtrado_por_comprimento_maxN/sequencias_spike{i}.fasta")
        
         # Verifica se o arquivo de sequência existe
         if os.path.exists(arquivo_sequencias):
@@ -69,6 +69,6 @@ try:
                 exit(1)
         else:
             print(f"Arquivo {arquivo_sequencias} não encontrado.")
-
+       
 except IOError as e:
     print(e)
