@@ -2,3 +2,4 @@ venv/
 SPIKE_Alinhado
 spike_ordenadoPorData
 sequences_filtrado_por_comprimento_maxN
+*.zip
